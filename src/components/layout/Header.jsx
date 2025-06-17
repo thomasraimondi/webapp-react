@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 export default function Header() {
   return (
     <header className="flex gap-4 bg-blue-500 text-white p-4">
@@ -5,14 +7,14 @@ export default function Header() {
       <nav className="mt-2">
         <ul className="flex space-x-4">
           <li>
-            <a href="/" className="text-white hover:underline">
+            <NavLink to="/" className="text-white hover:underline">
               Home
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="/movies" className="text-white hover:underline">
+            <NavLink to="/movies" className="text-white hover:underline">
               Movies
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>
