@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+#card-movie {
+  @apply flex flex-col bg-white rounded-lg shadow-md p-4 w-full m-2 sm:w-1/2 md:w-1/4;
+}
