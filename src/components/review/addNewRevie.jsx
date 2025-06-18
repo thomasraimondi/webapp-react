@@ -34,8 +34,7 @@ export default function AddNewReview({ movieId }) {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Add New Review</h2>
-      <form onSubmit={handleSubmit} className="bg-white px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={handleSubmit} className="bg-white mb-4">
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -52,6 +51,7 @@ export default function AddNewReview({ movieId }) {
             onChange={(e) =>
               setFormDataReview({ ...formDataReview, name: e.target.value })
             }
+            required
           ></input>
         </div>
         <div className="mb-4">
@@ -69,6 +69,7 @@ export default function AddNewReview({ movieId }) {
             onChange={(e) =>
               setFormDataReview({ ...formDataReview, text: e.target.value })
             }
+            require
           ></textarea>
         </div>
         <div className="mb-4">
@@ -89,6 +90,7 @@ export default function AddNewReview({ movieId }) {
             onChange={(e) =>
               setFormDataReview({ ...formDataReview, vote: e.target.value })
             }
+            require
           ></input>
         </div>
 
