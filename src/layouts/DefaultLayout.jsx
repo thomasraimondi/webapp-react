@@ -6,7 +6,7 @@ export default function DefaultLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow p-4">
+      <main className="flex-grow p-4 bg-black">
         <Outlet />
       </main>
       <Footer />
