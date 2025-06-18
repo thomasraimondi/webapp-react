@@ -1,14 +1,9 @@
-import { useEffect } from "react";
 import axios from "axios";
 
 export default function DeleteConfirm({ entity, id, cancel }) {
-  useEffect(() => {
-    console.log(entity, id, cancel);
-  }, []);
-
   const handleSubmit = () => {
     axios.delete(`http://127.0.0.1:3000/${entity}/${id}`).then((response) => {
-      calcel(false);
+      cancel(false);
     });
   };
 

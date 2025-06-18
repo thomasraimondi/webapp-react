@@ -29,6 +29,7 @@ export default function AddMovieForm() {
         }
         navigate("/movies");
         setFormData(initialFormData); // Reset form data after successful submission
+        setAddMovie(false);
         console.log("Movie added successfully:", results.data);
       })
       .catch((error) => {

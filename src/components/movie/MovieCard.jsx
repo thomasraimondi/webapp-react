@@ -26,19 +26,27 @@ export default function MovieCard({ movie }) {
           </div>
           <p className="text-gray-500 mt-2 text-xs mb-2">{movie.abstract}</p>
           <div className="data flex justify-around mt-auto">
-            <div
-              className={`text-center flex items-center ${
-                formatVote >= 4 ? "bg-green-300" : "bg-red-300"
-              } rounded-full px-2`}
-            >
-              <span className={`text-lg font-bold + `}>{formatVote}</span>
-            </div>
-            <div className="ltext-center flex items-center bg-blue-300 rounded-full px-2">
-              <span className="text-xs text-gray-500">Reviews</span>
-              <span className="text-md font-bold text-blue-500">
-                {movie.n_reviewes}
-              </span>
-            </div>
+            {formatVote > 0 ? (
+              <div
+                className={`text-center flex items-center ${
+                  formatVote >= 4 ? "bg-green-300" : "bg-red-300"
+                } rounded-full px-2`}
+              >
+                <span className={`text-lg font-bold + `}>{formatVote}</span>
+              </div>
+            ) : (
+              <></>
+            )}
+            {movie.n_reviewes > 0 ? (
+              <div className="ltext-center flex items-center bg-blue-300 rounded-full px-2">
+                <span className="text-xs text-gray-500">Reviews</span>
+                <span className="text-md font-bold text-blue-500">
+                  {movie.n_reviewes}
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </Link>

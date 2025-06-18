@@ -18,7 +18,7 @@ export default function ReviewCard({ review }) {
           </p>
           <p className="text-gray-800">Vote: {review.vote}</p>
           <FontAwesomeIcon
-            className="text-gray-800 text-xl text-red-600 cursor-pointer"
+            className="text-xl text-red-600 cursor-pointer"
             icon={faTrashCan}
             onClick={() => setConfirmDelete(true)}
           />
