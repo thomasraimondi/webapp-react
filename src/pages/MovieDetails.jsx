@@ -1,10 +1,20 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSquarePlus,
+  faSquareMinus,
+} from "@fortawesome/free-regular-svg-icons";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
+import AddNewReview from "../components/review/addNewRevie";
 
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState();
+  const [addReview, setAddReview] = useState(false);
+  const navigate = useNavigate();
 
   const getMovieById = (id) => {
     axios
@@ -19,16 +29,18 @@ export default function MovieDetails() {
 
   useEffect(() => {
     getMovieById(id);
-  }, []);
-
-  useEffect(() => {
-    console.log("Movie details:", movie);
   }, [movie]);
 
   return (
     movie && (
       <div className="flex flex-col items-center justify-center bg-gray-100 w-3/4 mx-auto p-6 rounded-lg shadow-md">
-        <div className="flex flex-col w-3/4">
+        <div className="flex gap-5 w-3/4">
+          <FontAwesomeIcon
+            className="text-4xl cursor-pointer text-gray-600 hover:text-gray-800"
+            icon={faChevronLeft}
+            onClick={() => navigate(-1)}
+          />
+
           <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
         </div>
         <div className="flex flex-wrap my-3 w-3/4">
@@ -49,9 +61,32 @@ export default function MovieDetails() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-3/4">
-          <div className="header-reviews flex items-center justify-between w-full mb-4">
-            <h2>Reviews</h2>
-            <span>aggiungi</span>
+          <div className="flex flex-col mb-5 w-full">
+            <div className="flex justify-between items-center bg-gray-100 shadow-md rounded-t-lg">
+              <div className="p-4 flex items-center">
+                <h2 className="text-2xl font-bold">Reviews</h2>
+              </div>
+              <div className="icon p-4 flex items-center">
+                {addReview ? (
+                  <FontAwesomeIcon
+                    className="text-4xl"
+                    icon={faSquareMinus}
+                    onClick={() => setAddReview(!addReview)}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    className="text-4xl"
+                    icon={faSquarePlus}
+                    onClick={() => setAddReview(!addReview)}
+                  />
+                )}
+              </div>
+            </div>
+            {addReview && (
+              <div className="bg-white p-6 shadow-md rounded-b-lg">
+                <AddNewReview movieId={movie.id} />
+              </div>
+            )}
           </div>
           {movie.reviews && movie.reviews.length > 0 ? (
             movie.reviews.map((review) => (
