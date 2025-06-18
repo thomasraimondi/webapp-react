@@ -3,3 +3,18 @@
 #card-movie {
   @apply flex flex-col bg-white rounded-lg shadow-md p-4 w-full m-2 sm:w-1/2 md:w-1/4;
 }
+
+#home-title {
+  font-size: 5rem;
+  background: url("/public/gradient.jpg") center;
+  background-size: cover;
+  background-clip: text;
+  color: transparent;
+  animation: animate 3s linear infinite;
+}
+
+@keyframes animate {
+  to {
+    background-position-x: -500px;
+  }
+}

@@ -14,7 +14,7 @@ export default function Header() {
   console.log(location.pathname);
 
   return (
-    <header className="text-black p-4">
+    <header className="text-white p-4 bg-gray-800">
       <div className="flex justify-between">
         <nav className="mt-2">
           <ul className="flex space-x-4">
