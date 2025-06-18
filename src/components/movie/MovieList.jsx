@@ -14,16 +14,10 @@ export default function MovieList() {
   return (
     <>
       <div className="flex flex-col mb-10">
-        <div className="flex justify-between items-center bg-gray-100 shadow-md rounded-t-lg">
-          <div className="p-4 flex items-center">
-            <h2 className="text-2xl font-bold">Movies List</h2>
-          </div>
+        <div className="flex justify-center text-white shadow-md rounded-t-lg">
+          <h2 className="text-4xl font-bold">Movies List</h2>
         </div>
-        {addMovie && (
-          <div className="bg-white p-6 shadow-md rounded-b-lg">
-            <AddMovieForm />
-          </div>
-        )}
+        {addMovie && <AddMovieForm />}
       </div>
       <div className="flex justify-center gap-8 flex-wrap">
         {movies ? (
