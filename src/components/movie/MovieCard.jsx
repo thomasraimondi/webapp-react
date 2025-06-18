@@ -1,10 +1,8 @@
 import { Link } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons/faEllipsisVertical";
-import { useLocation } from "react-router";
 
 export default function MovieCard({ movie }) {
-  const location = useLocation();
   const formatVote = !isNaN(parseFloat(movie.avg_vote_movie).toFixed(1))
     ? parseFloat(movie.avg_vote_movie).toFixed(1)
     : 0;
