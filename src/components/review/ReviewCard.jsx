@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import DeleteConfirm from "../ui/DeleteConfirm";
+import Stars from "../ui/Stars";
 
 export default function ReviewCard({ review }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -16,7 +17,9 @@ export default function ReviewCard({ review }) {
           <p className="text-gray-800 grow">
             {review.text ? review.text : "No text available."}
           </p>
-          <p className="text-gray-800">Vote: {review.vote}</p>
+          <div className="stars text-amber-300">
+            <Stars vote={review.vote} maxvote="5" />
+          </div>
           <FontAwesomeIcon
             className="text-xl text-red-600 cursor-pointer"
             icon={faTrashCan}

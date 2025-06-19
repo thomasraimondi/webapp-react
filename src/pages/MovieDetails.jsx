@@ -10,6 +10,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
 import AddNewReview from "../components/review/addNewRevie";
 import ReviewCard from "../components/review/ReviewCard";
+import Stars from "../components/ui/Stars";
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -30,7 +31,7 @@ export default function MovieDetails() {
 
   useEffect(() => {
     getMovieById(id);
-  }, [movie]);
+  }, []);
 
   return (
     movie && (
@@ -56,7 +57,9 @@ export default function MovieDetails() {
             </p>
             <p className="mt-4">Release Date: {movie.release_year}</p>
             <p className="mt-2">Director: {movie.director}</p>
-            <p className="mt-2 ">Rating: {movie.avg_vote}</p>
+            <div className="stars text-amber-300">
+              <Stars vote={movie.avg_vote_movie} maxvote="5" />
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center bg-white p-6 rounded-3xl shadow-md w-3/4">
@@ -83,7 +86,7 @@ export default function MovieDetails() {
             </div>
             {addReview && (
               <div className="bg-white shadow-md rounded-b-lg">
-                <AddNewReview movieId={movie.id} />
+                <AddNewReview movieId={movie.id} refresh={getMovieById} />
               </div>
             )}
           </div>
