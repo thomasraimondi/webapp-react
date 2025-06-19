@@ -7,14 +7,16 @@ import { useMovies } from "../../contexts/moviesContext";
 
 const initialFormData = {
   title: "",
+  director: "",
+  genere: "",
+  release_year: "",
   abstract: "",
   image: "",
-  director: "",
 };
 
 export default function AddMovieForm() {
   const [formData, setFormData] = useState(initialFormData);
-  const { setAddMovie } = useMovies();
+  const { setAddMovie, getMovies } = useMovies();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -22,15 +24,18 @@ export default function AddMovieForm() {
 
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:3000/movies", formData)
+      .post("http://127.0.0.1:3000/movies", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((results) => {
         if (results.status !== 201) {
           throw new Error("Failed to add movie");
         }
-        navigate("/movies");
+        getMovies();
+        navigate("/movies/" + results.data.id);
         setFormData(initialFormData); // Reset form data after successful submission
         setAddMovie(false);
-        console.log("Movie added successfully:", results.data);
+        // console.log("Movie added successfully:", results.data);
       })
       .catch((error) => {
         console.error("Error adding movie:", error);
@@ -41,7 +46,7 @@ export default function AddMovieForm() {
     <div className="flex justify-center items-center h-screen w-full fixed top-0 left-0 bg-black/70">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 z-10 w-1/2 backdrop-blur-lg"
+        className="bg-white p-6 z-10 w-1/2 backdrop-blur-lg rounded-lg"
       >
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold mb-4">Add New Movie</h2>
@@ -51,52 +56,81 @@ export default function AddMovieForm() {
             onClick={() => setAddMovie(false)}
           />
         </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Title</label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Director</label>
-          <input
-            type="text"
-            value={formData.director}
-            onChange={(e) =>
-              setFormData({ ...formData, director: e.target.value })
-            }
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Description</label>
-          <textarea
-            value={formData.abstract}
-            onChange={(e) =>
-              setFormData({ ...formData, abstract: e.target.value })
-            }
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Image URL</label>
-          <input
-            type="text"
-            value={formData.image}
-            onChange={(e) =>
-              setFormData({ ...formData, image: e.target.value })
-            }
-            className="w-full p-2 border border-gray-300 rounded"
-          />
+        <div className="flex gap-4">
+          <div className="">
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Title</label>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Director</label>
+              <input
+                type="text"
+                value={formData.director}
+                onChange={(e) =>
+                  setFormData({ ...formData, director: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Genere</label>
+              <input
+                type="text"
+                value={formData.genere}
+                onChange={(e) =>
+                  setFormData({ ...formData, genere: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Description</label>
+              <textarea
+                value={formData.abstract}
+                onChange={(e) =>
+                  setFormData({ ...formData, abstract: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              ></textarea>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Release Year</label>
+              <input
+                type="number"
+                value={formData.release_year}
+                onChange={(e) =>
+                  setFormData({ ...formData, release_year: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              ></input>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Image URL</label>
+              <input
+                type="file"
+                name="image"
+                onChange={(e) =>
+                  setFormData({ ...formData, image: e.target.files[0] })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+          </div>
         </div>
         <button
           type="submit"
