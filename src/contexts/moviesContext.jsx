@@ -13,7 +13,7 @@ const MoviesProvider = ({ children }) => {
     axios
       .get("http://127.0.0.1:3000/movies")
       .then((response) => {
-        setMovies(response.data.results);
+        setMovies(response.data.movies);
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
