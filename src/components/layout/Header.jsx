@@ -1,14 +1,11 @@
 import { NavLink } from "react-router";
 import { useMovies } from "../../contexts/moviesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSquareMinus,
-  faSquarePlus,
-} from "@fortawesome/free-regular-svg-icons";
+import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 import { useLocation } from "react-router";
 
 export default function Header() {
-  const { addMovie, setAddMovie } = useMovies();
+  const { setAddMovie } = useMovies();
   const location = useLocation();
 
   console.log(location.pathname);
@@ -30,24 +27,14 @@ export default function Header() {
             </li>
           </ul>
         </nav>
-        {location.pathname === "/movies" ? (
+        {location.pathname === "/movies" && (
           <div className="icon flex items-center">
-            {addMovie ? (
-              <FontAwesomeIcon
-                className="text-4xl"
-                icon={faSquareMinus}
-                onClick={() => setAddMovie(!addMovie)}
-              />
-            ) : (
-              <FontAwesomeIcon
-                className="text-4xl"
-                icon={faSquarePlus}
-                onClick={() => setAddMovie(!addMovie)}
-              />
-            )}
+            <FontAwesomeIcon
+              className="text-4xl"
+              icon={faSquarePlus}
+              onClick={() => setAddMovie(true)}
+            />
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </header>
