@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const initialFormData = {
@@ -8,15 +8,15 @@ const initialFormData = {
   name: "",
 };
 
-export default function AddNewReview({ movieId }) {
+export default function AddNewReview({ movieId, refresh }) {
   const [formDataReview, setFormDataReview] = useState(initialFormData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formDataReview.movie_id = movieId; // Ensure movie_id is set correctly
+
+    formDataReview.movie_id = movieId;
+
     console.log("Submitting review data:", formDataReview);
-    // Here you would typically send the formData to your backend API
-    // For example:
     axios
       .post("http://127.0.1:3000/reviews", formDataReview)
       .then((response) => {
@@ -26,6 +26,7 @@ export default function AddNewReview({ movieId }) {
         console.log("Review added successfully:", response.data);
         // Reset form data after successful submission
         setFormDataReview(initialFormData);
+        refresh(movieId);
       })
       .catch((error) => {
         console.error("Error adding review:", error);
