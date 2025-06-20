@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import StarsInput from "../ui/StarsInput";
 
 const initialFormData = {
   text: "",
@@ -44,7 +45,7 @@ export default function AddNewReview({ movieId, refresh }) {
             Name
           </label>
           <input
-            id="Name"
+            id="name"
             type="text"
             placeholder="enter your name"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -70,7 +71,7 @@ export default function AddNewReview({ movieId, refresh }) {
             onChange={(e) =>
               setFormDataReview({ ...formDataReview, text: e.target.value })
             }
-            require
+            require="true"
           ></textarea>
         </div>
         <div className="mb-4">
@@ -80,7 +81,8 @@ export default function AddNewReview({ movieId, refresh }) {
           >
             Vote
           </label>
-          <input
+          <StarsInput vote="" maxvote="5" />
+          {/* <input
             id="vote"
             type="number"
             min="1"
@@ -92,7 +94,7 @@ export default function AddNewReview({ movieId, refresh }) {
               setFormDataReview({ ...formDataReview, vote: e.target.value })
             }
             require
-          ></input>
+          ></input> */}
         </div>
 
         <button
