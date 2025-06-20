@@ -1,9 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useMovies } from "../../contexts/moviesContext";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const initialFormData = {
   title: "",
@@ -16,15 +16,14 @@ const initialFormData = {
 
 export default function AddMovieForm() {
   const [formData, setFormData] = useState(initialFormData);
-  const { setAddMovie, getMovies } = useMovies();
+  const { setAddMovie, baseUrl, getMovies } = useMovies();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     console.log("Submitting form data:", formData);
-
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:3000/movies", formData, {
+      .post(baseUrl + "/movies", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((results) => {
@@ -32,10 +31,10 @@ export default function AddMovieForm() {
           throw new Error("Failed to add movie");
         }
         getMovies();
-        navigate("/movies/" + results.data.id);
-        setFormData(initialFormData); // Reset form data after successful submission
+        const newMovieId = results.data.id;
+        setFormData(initialFormData);
         setAddMovie(false);
-        // console.log("Movie added successfully:", results.data);
+        navigate("/movies/" + newMovieId);
       })
       .catch((error) => {
         console.error("Error adding movie:", error);
