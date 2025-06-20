@@ -6,12 +6,15 @@ import axios from "axios";
 const MoviesContext = createContext();
 
 const MoviesProvider = ({ children }) => {
+  const baseUrl = import.meta.env.VITE_BASE_API_URL;
   const [movies, setMovies] = useState([]);
+  const [movie, setMovie] = useState();
+  const [newMovieId, setNewMovieId] = useState(0);
   const [addMovie, setAddMovie] = useState(false);
 
   const getMovies = () => {
     axios
-      .get("http://127.0.0.1:3000/movies")
+      .get(baseUrl + "/movies")
       .then((response) => {
         setMovies(response.data.movies);
       })
@@ -20,9 +23,28 @@ const MoviesProvider = ({ children }) => {
       });
   };
 
+  const getMovieById = (id) => {
+    axios
+      .get(`${baseUrl}/movies/${id}`)
+      .then((response) => {
+        setMovie(response.data.movie);
+      })
+      .catch((error) => {
+        console.error("Error fetching movie by ID:", error);
+      });
+  };
+
   return (
     <MoviesContext.Provider
-      value={{ movies, getMovies, addMovie, setAddMovie }}
+      value={{
+        movies,
+        getMovies,
+        movie,
+        getMovieById,
+        addMovie,
+        setAddMovie,
+        baseUrl,
+      }}
     >
       {children}
     </MoviesContext.Provider>

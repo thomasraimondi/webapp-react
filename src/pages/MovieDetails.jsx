@@ -1,6 +1,5 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSquarePlus,
@@ -11,23 +10,13 @@ import { useNavigate } from "react-router";
 import AddNewReview from "../components/review/addNewRevie";
 import ReviewCard from "../components/review/ReviewCard";
 import StarsVote from "../components/ui/StarsVote";
+import { useMovies } from "../contexts/moviesContext";
 
 export default function MovieDetails() {
   const { id } = useParams();
-  const [movie, setMovie] = useState();
   const [addReview, setAddReview] = useState(false);
   const navigate = useNavigate();
-
-  const getMovieById = (id) => {
-    axios
-      .get(`http://127.0.0.1:3000/movies/${id}`)
-      .then((response) => {
-        setMovie(response.data.movie);
-      })
-      .catch((error) => {
-        console.error("Error fetching movie by ID:", error);
-      });
-  };
+  const { movie, getMovieById } = useMovies();
 
   useEffect(() => {
     getMovieById(id);
