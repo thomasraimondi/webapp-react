@@ -4,7 +4,7 @@ import StarsInput from "../ui/StarsInput";
 
 const initialFormData = {
   text: "",
-  vote: "",
+  vote: 0,
   movie_id: null,
   name: "",
 };
@@ -13,11 +13,9 @@ export default function AddNewReview({ movieId, refresh }) {
   const [formDataReview, setFormDataReview] = useState(initialFormData);
 
   const handleSubmit = (e) => {
+    // console.log(formDataReview);
     e.preventDefault();
-
     formDataReview.movie_id = movieId;
-
-    console.log("Submitting review data:", formDataReview);
     axios
       .post("http://127.0.1:3000/reviews", formDataReview)
       .then((response) => {
@@ -82,19 +80,22 @@ export default function AddNewReview({ movieId, refresh }) {
             Vote
           </label>
           <StarsInput vote="" maxvote="5" />
-          {/* <input
+          <input
             id="vote"
-            type="number"
+            type="text"
             min="1"
             max="5"
             placeholder="1 to 5"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={formDataReview.vote}
             onChange={(e) =>
-              setFormDataReview({ ...formDataReview, vote: e.target.value })
+              setFormDataReview({
+                ...formDataReview,
+                vote: parseInt(e.target.value),
+              })
             }
             require
-          ></input> */}
+          ></input>
         </div>
 
         <button
