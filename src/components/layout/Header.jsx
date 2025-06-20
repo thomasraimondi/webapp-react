@@ -8,8 +8,6 @@ export default function Header() {
   const { setAddMovie } = useMovies();
   const location = useLocation();
 
-  console.log(location.pathname);
-
   return (
     <header className="text-white p-4 bg-gray-800">
       <div className="flex justify-between">
