@@ -7,9 +7,13 @@ export default function Stars({ vote, maxvote }) {
     <>
       {Array.from({ length: maxvote }).map((_, i) =>
         i < vote ? (
-          <FontAwesomeIcon className="text-amber-300" icon={faStar} />
+          <FontAwesomeIcon key={i} className="text-amber-300" icon={faStar} />
         ) : (
-          <FontAwesomeIcon className="text-amber-300" icon={faStartRegular} />
+          <FontAwesomeIcon
+            key={i}
+            className="text-amber-300"
+            icon={faStartRegular}
+          />
         )
       )}
     </>

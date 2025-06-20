@@ -91,7 +91,9 @@ export default function MovieDetails() {
             )}
           </div>
           {movie.reviews && movie.reviews.length > 0 ? (
-            movie.reviews.map((review) => <ReviewCard review={review} />)
+            movie.reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))
           ) : (
             <p className="text-gray-600">No reviews available.</p>
           )}
