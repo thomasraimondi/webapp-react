@@ -10,7 +10,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
 import AddNewReview from "../components/review/addNewRevie";
 import ReviewCard from "../components/review/ReviewCard";
-import Stars from "../components/ui/Stars";
+import StarsVote from "../components/ui/StarsVote";
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -58,7 +58,7 @@ export default function MovieDetails() {
             <p className="mt-4">Release Date: {movie.release_year}</p>
             <p className="mt-2">Director: {movie.director}</p>
             <div className="stars text-amber-300">
-              <Stars vote={movie.avg_vote_movie} maxvote="5" />
+              <StarsVote vote={movie.avg_vote_movie} maxvote="5" />
             </div>
           </div>
         </div>
