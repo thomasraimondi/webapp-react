@@ -75,7 +75,11 @@ export default function MovieDetails() {
             </div>
             {addReview && (
               <div className="bg-white shadow-md rounded-b-lg">
-                <AddNewReview movieId={movie.id} refresh={getMovieById} />
+                <AddNewReview
+                  movieId={movie.id}
+                  refresh={getMovieById}
+                  setAddReview={setAddReview}
+                />
               </div>
             )}
           </div>

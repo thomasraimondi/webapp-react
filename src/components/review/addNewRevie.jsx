@@ -9,7 +9,7 @@ const initialFormData = {
   name: "",
 };
 
-export default function AddNewReview({ movieId, refresh }) {
+export default function AddNewReview({ movieId, refresh, setAddReview }) {
   const [formDataReview, setFormDataReview] = useState(initialFormData);
 
   const handleSubmit = (e) => {
@@ -26,6 +26,7 @@ export default function AddNewReview({ movieId, refresh }) {
         // Reset form data after successful submission
         setFormDataReview(initialFormData);
         refresh(movieId);
+        setAddReview(false);
       })
       .catch((error) => {
         console.error("Error adding review:", error);
@@ -72,30 +73,18 @@ export default function AddNewReview({ movieId, refresh }) {
             require="true"
           ></textarea>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 flex gap-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="vote"
           >
             Vote
           </label>
-          <StarsInput vote="" maxvote="5" />
-          <input
-            id="vote"
-            type="text"
-            min="1"
-            max="5"
-            placeholder="1 to 5"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={formDataReview.vote}
-            onChange={(e) =>
-              setFormDataReview({
-                ...formDataReview,
-                vote: parseInt(e.target.value),
-              })
-            }
-            require
-          ></input>
+          <StarsInput
+            setFormData={setFormDataReview}
+            formData={formDataReview}
+            maxvote="5"
+          />
         </div>
 
         <button
