@@ -4,19 +4,20 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useMovies } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import Alert from "../ui/Alert";
 
 const initialFormData = {
   title: "",
   director: "",
-  genere: "",
-  release_year: "",
+  genre: "",
+  release_year: null,
   abstract: "",
   image: "",
 };
 
 export default function AddMovieForm() {
   const [formData, setFormData] = useState(initialFormData);
-  const { setAddMovie, baseUrl, getMovies } = useMovies();
+  const { setAddMovie, baseUrl, getMovies, alert, setAlert } = useMovies();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -34,10 +35,16 @@ export default function AddMovieForm() {
         const newMovieId = results.data.id;
         setFormData(initialFormData);
         setAddMovie(false);
+
         navigate("/movies/" + newMovieId);
       })
       .catch((error) => {
         console.error("Error adding movie:", error);
+        setAlert({
+          ...alert,
+          message: error.response.data.message,
+          elements: error.response.data.responseData.malformatElements,
+        });
       });
   };
 
@@ -52,7 +59,13 @@ export default function AddMovieForm() {
           <FontAwesomeIcon
             className="text-2xl font-bold mb-4"
             icon={faXmark}
-            onClick={() => setAddMovie(false)}
+            onClick={() => {
+              setAddMovie(false);
+              setAlert({
+                message: "",
+                elements: [],
+              });
+            }}
           />
         </div>
         <div className="flex gap-4">
@@ -66,9 +79,11 @@ export default function AddMovieForm() {
                   setFormData({ ...formData, title: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded"
-                required
               />
             </div>
+            {alert.elements.title && (
+              <Alert type="error" message={alert.elements.title[0].message} />
+            )}
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Director</label>
               <input
@@ -78,21 +93,28 @@ export default function AddMovieForm() {
                   setFormData({ ...formData, director: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded"
-                required
               />
             </div>
+            {alert.elements.director && (
+              <Alert
+                type="error"
+                message={alert.elements.director[0].message}
+              />
+            )}
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Genere</label>
               <input
                 type="text"
-                value={formData.genere}
+                value={formData.genre}
                 onChange={(e) =>
-                  setFormData({ ...formData, genere: e.target.value })
+                  setFormData({ ...formData, genre: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded"
-                required
               />
             </div>
+            {alert.elements.genre && (
+              <Alert type="error" message={alert.elements.genre[0].message} />
+            )}
           </div>
           <div>
             <div className="mb-4">
@@ -103,21 +125,42 @@ export default function AddMovieForm() {
                   setFormData({ ...formData, abstract: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded"
-                required
               ></textarea>
             </div>
+            {alert.elements.abstract && (
+              <Alert
+                type="error"
+                message={alert.elements.abstract[0].message}
+              />
+            )}
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Release Year</label>
               <input
                 type="number"
                 value={formData.release_year}
                 onChange={(e) =>
-                  setFormData({ ...formData, release_year: e.target.value })
+                  setFormData({
+                    ...formData,
+                    release_year: parseInt(e.target.value),
+                  })
                 }
                 className="w-full p-2 border border-gray-300 rounded"
-                required
+                maxLength={4}
+                onInput={(e) => {
+                  const target = e.target;
+                  target.value = target.value.replace(/\D/g, "");
+                  if (target.value.length > target.maxLength) {
+                    target.value = target.value.slice(0, target.maxLength);
+                  }
+                }}
               ></input>
             </div>
+            {alert.elements.release_year && (
+              <Alert
+                type="error"
+                message={alert.elements.release_year[0].message}
+              />
+            )}
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Image URL</label>
               <input
@@ -129,6 +172,9 @@ export default function AddMovieForm() {
                 className="w-full p-2 border border-gray-300 rounded"
               />
             </div>
+            {alert.elements.image && (
+              <Alert type="error" message={alert.elements.image[0].message} />
+            )}
           </div>
         </div>
         <button

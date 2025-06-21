@@ -5,12 +5,18 @@ import axios from "axios";
 
 const MoviesContext = createContext();
 
+const initialAlert = {
+  message: "",
+  elements: [],
+};
+
 const MoviesProvider = ({ children }) => {
   const baseUrl = import.meta.env.VITE_BASE_API_URL;
   const [movies, setMovies] = useState([]);
   const [movie, setMovie] = useState();
-  const [newMovieId, setNewMovieId] = useState(0);
+  const [alert, setAlert] = useState(initialAlert);
   const [addMovie, setAddMovie] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
 
   const getMovies = () => {
     axios
@@ -44,6 +50,10 @@ const MoviesProvider = ({ children }) => {
         addMovie,
         setAddMovie,
         baseUrl,
+        alert,
+        setAlert,
+        isloading,
+        setIsLoading,
       }}
     >
       {children}
